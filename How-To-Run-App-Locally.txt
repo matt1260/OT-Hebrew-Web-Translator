@@ -1,0 +1,5 @@
+How-To-Run-App-Locally
+
+"python3 manage.py runserver"
+
+and open web browser to http://127.0.0.1:8000/ to run the hebrewtool web app locally

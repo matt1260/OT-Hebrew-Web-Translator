@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block content %}
+<p><a href="/RBT/">Back to Search</a></p>
+
+<strong>Select a Chapter:</strong>
+    {% for chapter in 50|get_range %}
+    <a href="?book={{ book }}&chapter={{ chapter }}">{{ chapter }}</a> |
+    {% endfor %}
+<p></p>
+
+<div class="arrow-links">
+    
+    <h3>
+        <a href="{{ previous_verse }}"><i class="fas fa-chevron-circle-left"></i></a>
+        Genesis {{ chapter_num }}:{{ verse_num }}<a href="{{ next_verse }}"><i class="fas fa-chevron-circle-right"></i></a>
+    </h3>
+    
+</div>
+
+<h4>Verse</h4>
+
+<div style="display: flex; justify-content: flex-end;">
+    <label for="niqqudSwitch" style="font-size: 12px;">Show Niqqud &nbsp</label>
+    <input type="checkbox" id="niqqudSwitch" onclick="toggleNiqqud()">
+</div>
+<div>
+    <div style="display: flex; justify-content: flex-end;">
+        <div style="font-size: 28px;text-align: right;" id="hebText"></div>
+    </div>
+</div>
+
+<script>
+    // Assuming you have already defined the 'rbt_heb' variable from Python
+    var rbt_heb = `{{ hebrew | safe }}`;  // To safely pass the Python variable to JavaScript
+
+    // Function to remove niqqud characters from the Hebrew text
+    function removeNiqqud(text) {
+        // Regular expression pattern to match niqqud characters
+        var niqqudPattern = /[\u0591-\u05BD\u05BF\u05C1-\u05C5\u05C7]/g;
+        return text.replace(niqqudPattern, '');
+    }
+
+    // Function to toggle the niqqud visibility based on the checkbox state
+    function toggleNiqqud() {
+        var hebText = document.getElementById("hebText");
+        var niqqudSwitch = document.getElementById("niqqudSwitch");
+
+        if (niqqudSwitch.checked) {
+            hebText.innerHTML = rbt_heb;
+        } else {
+            hebText.innerHTML = removeNiqqud(rbt_heb);
+        }
+    }
+
+    // Initially, set the innerHTML to the original rbt_heb content with niqqud removed
+    document.getElementById("hebText").innerHTML = removeNiqqud(rbt_heb);
+</script>
+
+    {% if rbt %}
+        {{ rbt|safe }}
+        {{ litv|safe }}
+        {{ esv|safe }}
+        {{ englxx|safe }}
+
+        <h4>Footnotes</h4>
+        <div>
+            <table>
+            {{ footnotes|safe }}
+            </table>
+        </div>
+        
+    {% else %}
+
+        <p>No verses found for chapter {{ chapter_num }}.</p>
+    {% endif %}
+{% endblock %}

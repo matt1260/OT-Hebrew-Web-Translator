@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<script src="https://cdn.tiny.cloud/1/z2v6hmacz3k9f8fruornolneh77m6jm8ybydwx3v3zwsfi55/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- search script -->
+<script>
+  $(document).ready(function () {
+      // Function to perform the search
+      function performSearch() {
+          var query = $("#query").val().toLowerCase(); // Convert query to lowercase
+          
+          // Perform the search only if the query is not empty
+          if (query.trim() !== "") {
+              $.ajax({
+                  url: '/translate/search_footnotes/', // Replace with your search endpoint
+                  method: 'GET',
+                  data: {query: query},
+                  dataType: 'json',
+                  success: function (data) {
+                      var results = data.results;
+                      var resultHtml = "";
+
+                      // Loop through the search results to generate HTML
+                      for (var i = 0; i < results.length; i++) {
+                          
+                          var resultText = results[i]; 
+                          // Create a regular expression for a case-insensitive search
+                          var regex = new RegExp(query, 'gi');
+
+                          resultText = resultText.replace(regex, function(match) {
+                              return '<span class="highlighted-search-term">' + match + '</span>';
+                          });
+                          resultHtml += "<div>" + resultText + "</div>";
+                      }
+
+                      // Display the results in the search-results div
+                      $("#search-results").html(resultHtml);
+                  },
+                  error: function (xhr, status, error) {
+                      console.log(error);
+                  }
+              });
+          }
+      }
+
+      // Attach an event listener to the input field to detect Enter key press
+      $("#query").keydown(function (event) {
+          if (event.key === "Enter") {
+              // Prevent the default form submission behavior
+              event.preventDefault();
+              
+              // Trigger the search by simulating a click on the search button
+              $("#search-button").click();
+          }
+      });
+
+      // Attach a click event to the search button
+      $("#search-button").click(performSearch);
+  });
+
+</script>
+
+
+
+  <div class="container">
+    <p><a href="/RBT/translate/edit">Back to Edit Search</a></p>
+        <h3>Genesis {{ chapter_ref }}:{{ verse_ref }}</h3>
+        {{ verse_html|safe }}
+<hr />
+
+        <h3>Footnote Content:</h3>
+        {{ footnote_html|safe }}
+
+<hr />
+
+
+        <h3>Edit Footnote:</h3>
+        <style>
+            textarea {
+                width: 100%;
+            }
+        </style>
+
+
+        <form method="POST">
+          {% csrf_token %}
+          <textarea name="footnote_edit" rows="10">{{ footnote_edit }}</textarea>
+
+          <br>
+          <input type="submit" value="Save">
+        </form>
+
+<hr />
+
+        <h3>Search Footnotes:</h3>
+        <form id="search-form">
+            <input type="text" id="query" name="query" placeholder="Search...">
+            <button type="button" id="search-button">Search</button>
+        </form>
+        <p id="result-count"></p>
+        <div id="search-results"></div>
+        
+      </div>
+        
+
+
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    branding: false,  // Hide the TinyMCE branding
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
+  });
+</script>
+
+
+{% endblock %}

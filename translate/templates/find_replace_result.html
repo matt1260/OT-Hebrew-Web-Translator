@@ -1,0 +1,14 @@
+<!-- find_replace_result.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Find and Replace Result</h2>
+    {% if replacement_count > 0 %}
+      <p>{{ replacement_count }} replacements made.</p>
+    {% else %}
+      <p>No replacements made.</p>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block content %}
+<p><a href="/RBT/translate/">Back to Translate Search</a></p>
+
+
+<div class="arrow-links">
+    
+    <h3>
+        <a href="{{ previous_verse }}"><i class="fas fa-chevron-circle-left"></i></a>
+        {{ verse }}<a href="{{ next_verse }}"><i class="fas fa-chevron-circle-right"></i></a>
+    </h3>
+    
+</div>
+
+{% if english_row %}
+
+<!--DISPLAY TABLE-->
+<table class="readerTable">
+    <tbody>
+      {{ hebrew_row|safe }}
+      {{ english_row|safe }}
+    </tbody>
+  </table>
+  
+  <!--EDIT TABLE-->
+  <form method="post">
+    {% csrf_token %}
+    <table class="hebrewTable">
+        <thead>
+            <tr>
+                <th>Reference</th>
+                <th>English</th>
+                <th>Hebrew</th>
+                <th>Occurances</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for id, ref_data, eng_data, heb_data, count_data in edit_table_data %}
+            <tr>
+              <td>{{ ref_data }}</td>
+              <td>
+                <input type="text" name="eng_data" value="{{ eng_data }}" class="edit-input">
+                <input type="hidden" name="id" value="{{ id }}">
+              </td>
+              <td style="font-size: 20px; text-align: right;">
+                {{ heb_data }}
+              </td>
+              <td>
+                {{ count_data }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">Save Changes</button>
+  </form>
+  
+
+    {% else %}
+        <h1>No Rows Found</h1>
+        <p>No rows matching the reference '{{ rbt_heb_ref }}' with a wildcard '*' at the end.</p>
+    {% endif %}
+
+{% endblock %}

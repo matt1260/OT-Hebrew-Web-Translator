@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block content %}
+<p><a href="/RBT/">Back to Search</a></p>
+
+<!-- make this a python generated variable depending on book i.e. 'Genesis Chapters: '-->
+<strong>Select a Chapter:</strong>
+<!-- change this custom tag to a python generated variable in the code -->
+    {% for chapter in 50|get_range %} 
+    <a href="?book={{ book }}&chapter={{ chapter }}">{{ chapter }}</a> |
+    {% endfor %}
+<p></p>
+
+    <h1>Genesis Chapter {{ chapter_num }}</h1>
+    {% if html %}
+        {{ html|safe }}
+    {% else %}
+    
+        <p>No results found for chapter {{ chapter_num }}.</p>
+    {% endif %}
+{% endblock %}
+

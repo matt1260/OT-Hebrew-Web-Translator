@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+<h1>Search</h1>
+
+<p>
+<form method="get" action="{% url 'search' %}">
+    <input type="text" name="q" placeholder="Enter search term...">
+    <button type="submit">Search</button>
+</form>
+</p>
+
+
+
+Genesis:
+{% for chapter in 50|get_range %}
+<a href="?book=Genesis&chapter={{ chapter }}">{{ chapter }}</a> |
+{% endfor %}
+
+
+{% endblock %}

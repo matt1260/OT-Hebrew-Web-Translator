@@ -1,0 +1,14 @@
+<!-- undo_replacements.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Undo Replacements</h2>
+    <p>Are you sure you want to undo the replacements?</p>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Confirm Undo">
+    </form>
+  </div>
+{% endblock %}

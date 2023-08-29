@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="robots" content="max-image-preview:large">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <link rel="stylesheet" id="mediaelement-css" href="https://www.realbible.tech/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.17" type="text/css" media="all">
+    <link rel="stylesheet" id="wp-mediaelement-css" href="https://www.realbible.tech/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-lightgallery-css" href="https://www.realbible.tech/wp-content/plugins/ut-portfolio/assets/vendor/lightGallery/css/lightgallery.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-prettyphoto-css" href="https://www.realbible.tech/wp-content/plugins/ut-portfolio/assets/css/plugins/prettyphoto/prettyPhoto.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-responsive-grid-css" href="https://www.realbible.tech/wp-content/plugins/ut-shortcodes/css/ut-responsive-grid.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-animate-css" href="https://www.realbible.tech/wp-content/plugins/ut-shortcodes/css/ut.animate.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-elastislide-css" href="https://www.realbible.tech/wp-content/plugins/ut-shortcodes/css/ut.elastislide.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-fancyrotator-css" href="https://www.realbible.tech/wp-content/plugins/ut-shortcodes/css/ut.fancyrotator.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-shortcodes-css" href="https://www.realbible.tech/wp-content/plugins/ut-shortcodes/css/ut.shortcode.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="js_composer_front-css" href="https://www.realbible.tech/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=5.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-bklynicons-css" href="https://www.realbible.tech/wp-content/plugins/ut-shortcodes/css/bklynicons/bklynicons.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="ut-vc-shortcodes-css" href="https://www.realbible.tech/wp-content/plugins/ut-shortcodes/css/ut.vc.shortcodes.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="wp-block-library-css" href="https://www.realbible.tech/wp-includes/css/dist/block-library/style.min.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="otter-blocks-css" href="https://www.realbible.tech/wp-content/plugins/otter-blocks/build/blocks/blocks.css?ver=ebd99bc5bbb9d5e073259f620f8497b8" type="text/css" media="all">
+    <link rel="stylesheet" id="classic-theme-styles-css" href="https://www.realbible.tech/wp-includes/css/classic-themes.min.css?ver=1" type="text/css" media="all">
+    <style id="global-styles-inline-css" type="text/css">
+    body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--neve-link-color: var(--nv-primary-accent);--wp--preset--color--neve-link-hover-color: var(--nv-secondary-accent);--wp--preset--color--nv-site-bg: var(--nv-site-bg);--wp--preset--color--nv-light-bg: var(--nv-light-bg);--wp--preset--color--nv-dark-bg: var(--nv-dark-bg);--wp--preset--color--neve-text-color: var(--nv-text-color);--wp--preset--color--nv-text-dark-bg: var(--nv-text-dark-bg);--wp--preset--color--nv-c-1: var(--nv-c-1);--wp--preset--color--nv-c-2: var(--nv-c-2);--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+    .wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+    :where(.wp-block-columns.is-layout-flex){gap: 2em;}
+    .wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+    </style>
+    <link rel="stylesheet" id="patreon-wordpress-css-css" href="https://www.realbible.tech/wp-content/plugins/patreon-connect/assets/css/app.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="neve-style-css" href="https://www.realbible.tech/wp-content/themes/neve/style-main-new.min.css?ver=3.2.3" type="text/css" media="all">
+    <style id="neve-style-inline-css" type="text/css">
+    .home.blog .nv-ft-post{margin-top:60px}.nv-ft-post{background:var(--nv-light-bg)}.nv-ft-post h2{font-size:calc( var(--fontSize, var(--h2FontSize)) * 1.3)}.nv-ft-post .nv-meta-list{display:block}.nv-ft-post .non-grid-content{padding:32px}.nv-ft-post .wp-post-image{position:absolute;object-fit:cover;width:100%;height:100%}.nv-ft-post .nv-post-thumbnail-wrap{margin:0;position:relative;min-height:320px}
+    .nv-meta-list li.meta:not(:last-child):after { content:"/" }
+     :root{ --container: 748px;--postWidth:100%; --primaryBtnBg: var(--nv-primary-accent); --primaryBtnHoverBg: var(--nv-primary-accent); --primaryBtnColor: #ffffff; --secondaryBtnColor: var(--nv-primary-accent); --primaryBtnHoverColor: #ffffff; --secondaryBtnHoverColor: var(--nv-primary-accent);--secondaryBtnBorderWidth:1px;--btnPadding:13px 15px;--primaryBtnPadding:13px 15px;--secondaryBtnPadding:12px 14px; --bodyFontFamily: Georgia,serif; --bodyFontSize: 15px; --bodyLineHeight: 1.6; --bodyLetterSpacing: 0px; --bodyFontWeight: 400; --bodyTextTransform: none; --headingsFontFamily: Poppins; --h1FontSize: 36px; --h1FontWeight: 800; --h1LineHeight: 1.3em; --h1LetterSpacing: 0px; --h1TextTransform: none; --h2FontSize: 28px; --h2FontWeight: 900; --h2LineHeight: 1.3em; --h2LetterSpacing: 0px; --h2TextTransform: uppercase; --h3FontSize: 24px; --h3FontWeight: 900; --h3LineHeight: 1.4em; --h3LetterSpacing: 0px; --h3TextTransform: capitalize; --h4FontSize: 20px; --h4FontWeight: 900; --h4LineHeight: 1.3em; --h4LetterSpacing: 0px; --h4TextTransform: uppercase; --h5FontSize: 14px; --h5FontWeight: 900; --h5LineHeight: 1.3em; --h5LetterSpacing: 0px; --h5TextTransform: uppercase; --h6FontSize: 12px; --h6FontWeight: 900; --h6LineHeight: 1.3em; --h6LetterSpacing: 0px; --h6TextTransform: uppercase;--formFieldBorderWidth:2px;--formFieldBorderRadius:3px; --formFieldBgColor: var(--nv-site-bg); --formFieldBorderColor: #dddddd; --formFieldColor: var(--nv-text-color);--formFieldPadding:10px 12px; } .has-neve-button-color-color{ color: var(--nv-primary-accent)!important; } .has-neve-button-color-background-color{ background-color: var(--nv-primary-accent)!important; } .single-post-container .alignfull > [class*="__inner-container"], .single-post-container .alignwide > [class*="__inner-container"]{ max-width:718px } .nv-meta-list{ --avatarSize: 20px; } .single .nv-meta-list{ --avatarSize: 20px; } .blog .blog-entry-title, .archive .blog-entry-title{ --fontSize: 24px; --fontWeight: 600; --textTransform: lowercase; } .nv-post-thumbnail-wrap{ --boxShadow:0 10px 20px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1); } .nv-post-cover{ --height: 250px;--padding:40px 15px;--justify: flex-start; --textAlign: left; --vAlign: center; } .nv-post-cover .nv-title-meta-wrap, .nv-page-title-wrap, .entry-header{ --textAlign: left; } .nv-is-boxed.nv-title-meta-wrap{ --padding:40px 15px; --bgColor: var(--nv-dark-bg); } .nv-overlay{ --opacity: 50; --blendMode: normal; } .nv-is-boxed.nv-comments-wrap{ --padding:20px; } .nv-is-boxed.comment-respond{ --padding:20px; } .global-styled{ --bgColor: var(--nv-site-bg); } .header-top{ --rowBColor: var(--nv-light-bg); --color: var(--nv-text-color); --bgColor: #f0f0f0; } .header-main{ --rowBColor: #000000; --color: #060310; --bgColor: rgba(255,255,255,0.47); } .header-bottom{ --rowBColor: var(--nv-light-bg); --color: var(--nv-text-color); --bgColor: #ffffff; } .header-menu-sidebar-bg{ --justify: flex-start; --textAlign: left;--flexG: 1; --color: var(--nv-text-color); --bgColor: var(--nv-site-bg); } .header-menu-sidebar{ width: 360px; } .builder-item--logo{ --maxWidth: 48px; --color: var(--nv-text-color);--padding:10px 0; --textAlign: center;--justify: center; } .builder-item--nav-icon,.header-menu-sidebar .close-sidebar-panel .navbar-toggle{ --borderRadius:3px;--borderWidth:1px; } .builder-item--nav-icon{ --padding:10px 15px; } .builder-item--primary-menu{ --hoverColor: #3463ae; --activeColor: #6d50ff; --spacing: 20px; --height: 25px; --fontSize: 1em; --lineHeight: 1.6em; --letterSpacing: 0px; --fontWeight: 500; --textTransform: none; --iconSize: 1em; } .hfg-is-group.has-primary-menu .inherit-ff{ --inheritedFW: 500; } .builder-item--button_base{ --primaryBtnBg: #ffffff; --primaryBtnColor: #052d49; --primaryBtnHoverBg: #f96854;--primaryBtnBorderWidth:2px;--padding:8px 12px; } .footer-top-inner .row{ grid-template-columns:1fr 2fr; --vAlign: flex-start; } .footer-top{ --rowBColor: var(--nv-light-bg); --color: var(--nv-text-color); --bgColor: #ffffff; } .footer-main-inner .row{ grid-template-columns:2fr 1fr; --vAlign: flex-start; } .footer-main{ --rowBWidth:0px; --rowBColor: var(--nv-light-bg); --color: #ffffff; --bgColor: rgba(12,19,30,0.89); } .footer-bottom-inner .row{ grid-template-columns:1fr; --vAlign: flex-start; } .footer-bottom{ --rowBColor: var(--nv-light-bg); --color: var(--nv-text-dark-bg); --bgColor: rgba(0,0,0,0.72); } .builder-item--footer-one-widgets{ --textAlign: left;--justify: flex-start; } .builder-item--footer-three-widgets{ --textAlign: left;--justify: flex-start; } .builder-item--footer-menu{ --hoverColor: var(--nv-primary-accent); --spacing: 20px; --height: 25px; --fontFamily: Arial,Helvetica,sans-serif; --fontSize: 1em; --lineHeight: 1.6em; --letterSpacing: 0px; --fontWeight: 700; --textTransform: none; --iconSize: 1em; --textAlign: left;--justify: flex-start; } .item--inner.builder-item--footer_copyright{ --color: var(--nv-text-dark-bg); } .builder-item--footer_copyright{ --fontSize: 1em; --lineHeight: 1.6; --letterSpacing: 0px; --fontWeight: 500; --textTransform: none; --iconSize: 1em; --textAlign: left;--justify: flex-start; } @media(min-width: 576px){ :root{ --container: 992px;--postWidth:100%;--btnPadding:13px 15px;--primaryBtnPadding:13px 15px;--secondaryBtnPadding:12px 14px; --bodyFontSize: 16px; --bodyLineHeight: 1.6; --bodyLetterSpacing: 0px; --h1FontSize: 38px; --h1LineHeight: 1.3em; --h1LetterSpacing: 0px; --h2FontSize: 30px; --h2LineHeight: 1.3em; --h2LetterSpacing: 0px; --h3FontSize: 26px; --h3LineHeight: 1.4em; --h3LetterSpacing: 0px; --h4FontSize: 22px; --h4LineHeight: 1.3em; --h4LetterSpacing: 0px; --h5FontSize: 14px; --h5LineHeight: 1.3em; --h5LetterSpacing: 0px; --h6FontSize: 12px; --h6LineHeight: 1.3em; --h6LetterSpacing: 0px; } .single-post-container .alignfull > [class*="__inner-container"], .single-post-container .alignwide > [class*="__inner-container"]{ max-width:962px } .nv-meta-list{ --avatarSize: 20px; } .single .nv-meta-list{ --avatarSize: 20px; } .blog .blog-entry-title, .archive .blog-entry-title{ --fontSize: 26px; } .nv-post-cover{ --height: 320px;--padding:60px 30px;--justify: flex-start; --textAlign: left; --vAlign: center; } .nv-post-cover .nv-title-meta-wrap, .nv-page-title-wrap, .entry-header{ --textAlign: left; } .nv-is-boxed.nv-title-meta-wrap{ --padding:60px 30px; } .nv-is-boxed.nv-comments-wrap{ --padding:30px; } .nv-is-boxed.comment-respond{ --padding:30px; } .header-menu-sidebar-bg{ --justify: flex-start; --textAlign: left;--flexG: 1; } .header-menu-sidebar{ width: 360px; } .builder-item--logo{ --maxWidth: 48px;--padding:10px 0; --textAlign: center;--justify: center; } .builder-item--nav-icon{ --padding:10px 15px; } .builder-item--primary-menu{ --spacing: 20px; --height: 25px; --fontSize: 1em; --lineHeight: 1.6em; --letterSpacing: 0px; --iconSize: 1em; } .builder-item--button_base{ --padding:8px 12px; } .footer-main{ --rowBWidth:0px; } .builder-item--footer-one-widgets{ --textAlign: left;--justify: flex-start; } .builder-item--footer-three-widgets{ --textAlign: left;--justify: flex-start; } .builder-item--footer-menu{ --spacing: 20px; --height: 25px; --fontSize: 1em; --lineHeight: 1.6em; --letterSpacing: 0px; --iconSize: 1em; --textAlign: left;--justify: flex-start; } .builder-item--footer_copyright{ --fontSize: 1em; --lineHeight: 1.6; --letterSpacing: 0px; --iconSize: 1em; --textAlign: left;--justify: flex-start; } }@media(min-width: 960px){ :root{ --container: 900px;--postWidth:100%;--btnPadding:13px 15px;--primaryBtnPadding:13px 15px;--secondaryBtnPadding:12px 14px; --bodyFontSize: 16px; --bodyLineHeight: 1.9; --bodyLetterSpacing: 0px; --h1FontSize: 32px; --h1LineHeight: 1.3em; --h1LetterSpacing: 0px; --h2FontSize: 32px; --h2LineHeight: 1.3em; --h2LetterSpacing: 0px; --h3FontSize: 28px; --h3LineHeight: 1.3em; --h3LetterSpacing: 0px; --h4FontSize: 13px; --h4LineHeight: 1.3em; --h4LetterSpacing: 0px; --h5FontSize: 16px; --h5LineHeight: 1.3em; --h5LetterSpacing: 0px; --h6FontSize: 14px; --h6LineHeight: 1.3em; --h6LetterSpacing: 0px; } body:not(.single):not(.archive):not(.blog):not(.search):not(.error404) .neve-main > .container .col, body.post-type-archive-course .neve-main > .container .col, body.post-type-archive-llms_membership .neve-main > .container .col{ max-width: 100%; } body:not(.single):not(.archive):not(.blog):not(.search):not(.error404) .nv-sidebar-wrap, body.post-type-archive-course .nv-sidebar-wrap, body.post-type-archive-llms_membership .nv-sidebar-wrap{ max-width: 0%; } .neve-main > .archive-container .nv-index-posts.col{ max-width: 100%; } .neve-main > .archive-container .nv-sidebar-wrap{ max-width: 0%; } .neve-main > .single-post-container .nv-single-post-wrap.col{ max-width: 70%; } .single-post-container .alignfull > [class*="__inner-container"], .single-post-container .alignwide > [class*="__inner-container"]{ max-width:600px } .container-fluid.single-post-container .alignfull > [class*="__inner-container"], .container-fluid.single-post-container .alignwide > [class*="__inner-container"]{ max-width:calc(70% + 15px) } .neve-main > .single-post-container .nv-sidebar-wrap{ max-width: 30%; } .nv-meta-list{ --avatarSize: 20px; } .single .nv-meta-list{ --avatarSize: 20px; } .blog .blog-entry-title, .archive .blog-entry-title{ --fontSize: 16px; --lineHeight: 0.5em; --letterSpacing: 0.3px; } .nv-post-cover{ --height: 400px;--padding:60px 40px;--justify: flex-start; --textAlign: left; --vAlign: center; } .nv-post-cover .nv-title-meta-wrap, .nv-page-title-wrap, .entry-header{ --textAlign: left; } .nv-is-boxed.nv-title-meta-wrap{ --padding:60px 40px; } .nv-is-boxed.nv-comments-wrap{ --padding:40px; } .nv-is-boxed.comment-respond{ --padding:40px; } .header-menu-sidebar-bg{ --justify: flex-start; --textAlign: left;--flexG: 1; } .header-menu-sidebar{ width: 360px; } .builder-item--logo{ --maxWidth: 257px;--padding:10px 0; --textAlign: center;--justify: center; } .builder-item--nav-icon{ --padding:10px 15px; } .builder-item--primary-menu{ --spacing: 25px; --height: 23px; --fontSize: 1em; --lineHeight: 1.5em; --letterSpacing: 0px; --iconSize: 1em; } .builder-item--button_base{ --padding:8px 12px; } .footer-main{ --rowBWidth:0px; } .builder-item--footer-one-widgets{ --textAlign: right;--justify: flex-end; } .builder-item--footer-three-widgets{ --textAlign: center;--justify: center; } .builder-item--footer-menu{ --spacing: 71px; --height: 30px; --fontSize: 1em; --lineHeight: 1.6em; --letterSpacing: 0px; --iconSize: 1em; --textAlign: center;--justify: center; } .builder-item--footer_copyright{ --fontSize: 1em; --lineHeight: 1.6; --letterSpacing: 0px; --iconSize: 1em; --textAlign: center;--justify: center; } }:root{--nv-primary-accent:#ba8666;--nv-secondary-accent:#0f073f;--nv-site-bg:#ffffff;--nv-light-bg:#f7f7f7;--nv-dark-bg:#0f073f;--nv-text-color:#020202;--nv-text-dark-bg:#ffffff;--nv-c-1:#77b978;--nv-c-2:#f37262;--nv-fallback-ff:Arial, Helvetica, sans-serif;}
+    </style>
+    <link rel="stylesheet" id="cb_p6-css-main-css" href="https://www.realbible.tech/wp-content/plugins/patron-button-and-widgets-by-codebard/plugin/templates/default/style.css?ver=6.1.1" type="text/css" media="all">
+    <link rel="stylesheet" id="neve-google-font-poppins-css" href="//fonts.googleapis.com/css?family=Poppins%3A400%2C800%2C900%2C600&amp;display=swap&amp;ver=3.2.3" type="text/css" media="all">
+    <style>@font-face {
+                font-family: 'Libre Franklin Extra Bold';
+                src: url('https://www.realbible.tech/wp-content/plugins/patreon-connect/assets/fonts/librefranklin-extrabold-webfont.woff2') format('woff2'),
+                     url('https://www.realbible.tech/wp-content/plugins/patreon-connect/assets/fonts/librefranklin-extrabold-webfont.woff') format('woff');
+                font-weight: bold;
+                }
+    </style>
+
+
+    <!-- Custom CSS for the chapters -->
+    <style>
+        h4::after {
+            content: ' ';
+            display: block;
+            border-bottom: 1px solid #d2d2d2;
+        }
+
+        .arrow-links {
+            text-align: center;
+        }
+
+        .arrow-links a {
+            color: #ba8666; /* Customize the link color */
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 26px;
+        }
+        a.sdfootnoteanc {
+            font-style: italic;
+            font-size: 10pt;
+            text-decoration: none;
+        }
+        span.verse_ref, span.verse_ref a {
+            font-size: 12pt;
+            text-decoration: none;
+        }
+        span.hayah {
+            font-variant: small-caps;
+            
+        }
+        textarea {
+            white-space: normal;
+        }
+    </style>
+
+
+    <!-- Custom CSS for the footnotes -->
+    <style>
+        td a {
+            text-decoration: none;
+        }
+
+        span.footnote_header {
+            font-variant: small-caps;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+
+        p.rbt_footnote {
+            font-size: 14px; 
+            color: #333;
+            margin-bottom: 15px;   
+        }
+
+        span[lang="ar-SA"] {
+            font-family: "Times New Roman";
+
+        }
+        .highlighted-search-term {
+            background-color: yellow; 
+            color: black; 
+            font-weight: bold; 
+        }
+        span.result_verse_header {
+            font-size: 14pt;
+            line-height: 0;
+        }
+
+    </style>
+
+    
+    <!-- Custom CSS for the Hebrew reader table -->
+    <style>
+        table.readerTable {
+            border: 0px;
+            width: 100%;
+            text-align: center;
+        }
+        table.readerTable td, table.readerTable th {
+            padding: 4px 4px;
+            border: 0px;
+            text-align: right;
+        }
+        table.readerTable thead {
+        background: #DDDDDD;
+        }
+        table.readerTable thead th {
+        font-weight: normal;
+        }
+        table.readerTable tfoot {
+        font-weight: bold;
+        }
+    </style>
+
+    <!-- Custom CSS for the hebrew edit table -->
+    <style>
+        table.hebrewTable {
+            border: 6px solid #948473;
+            background-color: #FFE3C6;
+            width: 100%;
+            text-align: center;
+        }
+        table.hebrewTable td, table.hebrewTable th {
+            border: 1px solid #948473;
+            padding: 4px 4px;
+        }
+        table.hebrewTable tbody td {
+            font-size: 13px;
+        }
+        table.hebrewTable thead {
+            background: #948473;
+            background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+            background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+            background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+        }
+        table.hebrewTable thead th {
+            font-size: 17px;
+            font-weight: bold;
+            color: #F0F0F0;
+            text-align: left;
+            border-left: 2px solid #948473;
+        }
+        table.hebrewTable thead th:first-child {
+            border-left: none;
+        }
+        
+        table.hebrewTable tfoot {
+            font-size: 16px;
+            font-weight: bold;
+            color: #F0F0F0;
+            background: #948473;
+            background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+            background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+            background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+        }
+        table.hebrewTable tfoot td {
+            font-size: 16px;
+        }
+    </style>
+
+    <style>
+        .nav-ul li {
+        display: block;
+        position: relative;
+        font-size: 14pt;
+        font-family: Time New Roman;
+        font-weight: 100;
+        }
+    </style>
+
+    <style type="text/css" id="custom-background-css">
+    body.custom-background { background-image: url("https://www.realbible.tech/wp-content/uploads/2022/05/hebrew2.jpg"); background-position: center top; background-size: contain; background-repeat: no-repeat; background-attachment: fixed; }
+    </style>
+    <link rel="icon" href="https://www.realbible.tech/wp-content/uploads/2022/05/cropped-Screen-Shot-2022-05-02-at-3.28.29-PM-32x32.png" sizes="32x32">
+    <link rel="icon" href="https://www.realbible.tech/wp-content/uploads/2022/05/cropped-Screen-Shot-2022-05-02-at-3.28.29-PM-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://www.realbible.tech/wp-content/uploads/2022/05/cropped-Screen-Shot-2022-05-02-at-3.28.29-PM-180x180.png">
+    <meta name="msapplication-TileImage" content="https://www.realbible.tech/wp-content/uploads/2022/05/cropped-Screen-Shot-2022-05-02-at-3.28.29-PM-270x270.png">
+
+    
+</head>
+    
+    <body class="page-template-default page page-id-9943 custom-background  nv-blog-default nv-sidebar-full-width menu_sidebar_slide_left wpb-js-composer js-comp-ver-5.1.1 vc_responsive" id="neve_body">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0 0.49803921568627"></feFuncR><feFuncG type="table" tableValues="0 0.49803921568627"></feFuncG><feFuncB type="table" tableValues="0 0.49803921568627"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0 1"></feFuncR><feFuncG type="table" tableValues="0 1"></feFuncG><feFuncB type="table" tableValues="0 1"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765"></feFuncR><feFuncG type="table" tableValues="0 1"></feFuncG><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0 1"></feFuncR><feFuncG type="table" tableValues="0 0.27843137254902"></feFuncG><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0 0"></feFuncR><feFuncG type="table" tableValues="0 0.64705882352941"></feFuncG><feFuncB type="table" tableValues="0 1"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0.78039215686275 1"></feFuncR><feFuncG type="table" tableValues="0 0.94901960784314"></feFuncG><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745"></feFuncR><feFuncG type="table" tableValues="0 1"></feFuncG><feFuncB type="table" tableValues="0.44705882352941 0.4"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></feColorMatrix><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="0.098039215686275 1"></feFuncR><feFuncG type="table" tableValues="0 0.66274509803922"></feFuncG><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725"></feFuncB><feFuncA type="table" tableValues="1 1"></feFuncA></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"></feComposite></filter></defs></svg><div class="wrapper">
+        
+    <header class="header" role="banner" next-page-hide="">
+            <a class="neve-skip-link show-on-focus" href="#content">
+                Skip to content		</a>
+            <div id="header-grid" class="hfg_header site-header">
+        
+    <nav class="header--row header-main hide-on-mobile hide-on-tablet layout-full-contained nv-navbar header--row" data-row-id="main" data-show-on="desktop">
+    
+        <div class="header--row-inner header-main-inner">
+            <div class="container">
+                <div class="row row--wrapper" data-section="hfg_header_layout_main">
+                    <div class="hfg-slot left"><div class="builder-item desktop-center"><div class="item--inner builder-item--logo" data-section="title_tagline" data-item-id="logo">
+        
+    <div class="site-logo">
+        <a class="brand" href="https://www.realbible.tech/" title="Real Bible" aria-label="Real Bible"><div class="logo-on-top"><img src="https://www.realbible.tech/wp-content/uploads/2022/05/rb_logo.png" class="neve-site-logo skip-lazy" alt="" decoding="async" loading="lazy" data-variant="logo" srcset="https://www.realbible.tech/wp-content/uploads/2022/05/rb_logo.png 1178w, https://www.realbible.tech/wp-content/uploads/2022/05/rb_logo-768x85.png 768w" sizes="(max-width: 1178px) 100vw, 1178px" width="1178" height="130">
+            <div class="nv-title-tagline-wrap"><small>Real Bible Translation</small></div></div></a></div>
+    
+        </div>
+    
+    </div></div><div class="hfg-slot right"><div class="builder-item has-nav hfg-is-group has-primary-menu"><div class="item--inner builder-item--primary-menu has_menu" data-section="header_menu_primary" data-item-id="primary-menu">
+    
+        </div>
+    
+    <div class="item--inner builder-item--button_base" data-section="header_button" data-item-id="button_base">
+        <div class="component-wrap"><a href="https://www.patreon.com/realbible" class="button button-primary">PATREON</a></div>	</div>
+    
+    </div></div>							</div>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <nav class="header--row header-main hide-on-desktop layout-full-contained nv-navbar has-center header--row" data-row-id="main" data-show-on="mobile">
+    
+        <div class="header--row-inner header-main-inner">
+            <div class="container">
+                <div class="row row--wrapper" data-section="hfg_header_layout_main">
+                    <div class="hfg-slot left"></div><div class="hfg-slot center"><div class="builder-item mobile-center tablet-center"><div class="item--inner builder-item--logo" data-section="title_tagline" data-item-id="logo">
+        
+    <div class="site-logo">
+        <a class="brand" href="https://www.realbible.tech/" title="Real Bible" aria-label="Real Bible"><div class="logo-on-top"><img src="https://www.realbible.tech/wp-content/uploads/2022/05/rb_logo.png" class="neve-site-logo skip-lazy" alt="" decoding="async" loading="lazy" data-variant="logo" srcset="https://www.realbible.tech/wp-content/uploads/2022/05/rb_logo.png 1178w, https://www.realbible.tech/wp-content/uploads/2022/05/rb_logo-768x85.png 768w" sizes="(max-width: 1178px) 100vw, 1178px" width="1178" height="130">
+            </div></a></div>
+    
+        </div>
+    
+    </div></div><div class="hfg-slot right"><div class="builder-item tablet-left mobile-left"><div class="item--inner builder-item--nav-icon" data-section="header_menu_icon" data-item-id="nav-icon">
+        <div class="menu-mobile-toggle item-button navbar-toggle-wrapper">
+        <button type="button" class=" navbar-toggle" value="Navigation Menu" aria-label="Navigation Menu ">
+                        <span class="bars">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </span>
+                        <span class="screen-reader-text">Navigation Menu</span>
+        </button>
+    </div> <!--.navbar-toggle-wrapper-->
+    
+    
+        </div>
+    
+    </div></div>							</div>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="header-menu-sidebar" class="header-menu-sidebar menu-sidebar-panel slide_left" data-row-id="sidebar">
+        <div id="header-menu-sidebar-bg" class="header-menu-sidebar-bg">
+            <div class="close-sidebar-panel navbar-toggle-wrapper">
+                <button type="button" class="hamburger is-active  navbar-toggle active" value="Navigation Menu" aria-label="Navigation Menu ">
+                                        <span class="bars">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </span>
+                                        <span class="screen-reader-text">
+                    Navigation Menu					</span>
+                </button>
+            </div>
+            <div id="header-menu-sidebar-inner" class="header-menu-sidebar-inner ">
+                            <div class="builder-item has-nav"><div class="item--inner builder-item--primary-menu has_menu" data-section="header_menu_primary" data-item-id="primary-menu">
+        <div class="nv-nav-wrap">
+        <div role="navigation" class="style-border-bottom nav-menu-primary" aria-label="Primary Menu">
+    
+            <ul id="nv-primary-navigation-sidebar" class="primary-menu-ul nav-ul dropdowns-expanded"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10102"><a href="https://www.realbible.tech/app/">Translator App</a></li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9890"><a href="https://www.realbible.tech/analyses/">Language Analyses</a></li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9889"><a href="https://www.realbible.tech/visualizations/">Visualizations</a></li>
+            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9955"><a href="https://github.com/spearhead7">Github</a></li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-10173"><a href="https://www.realbible.tech/the-end-of-the-tongues-mystery/">Hebrew Cryptic Language</a></li>
+            <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-9943 current_page_item menu-item-9945"><a href="https://www.realbible.tech/about/" aria-current="page">About the Project</a></li>
+            </ul>	
+    </div>
+    </div>
+    
+        </div>
+    
+    </div><div class="builder-item desktop-left tablet-left mobile-left"><div class="item--inner builder-item--button_base" data-section="header_button" data-item-id="button_base">
+        <div class="component-wrap"><a href="https://www.patreon.com/realbible" class="button button-primary">PATREON</a></div>	</div>
+    
+    </div>					</div>
+        </div>
+    </div>
+    <div class="header-menu-sidebar-overlay hfg-ov"></div>
+    </div>
+    </header>
+    
+        
+    
+        
+    <main id="content" class="neve-main" role="main">
+    
+    <div class="container single-page-container">
+        <div class="row">
+                    <div class="nv-single-page-wrap col">
+                <div class="nv-content-wrap entry-content"><div class="vc_row wpb_row vc_row-fluid"><div class="wpb_column vc_column_container vc_col-sm-12"><div class="vc_column-inner "><div class="wpb_wrapper">
+        <div class="wpb_text_column wpb_content_element ">
+            <div class="wpb_wrapper">
+            
+
+                {% block content %}
+                {% endblock %}
+
+            </div>
+        </div>
+    </div></div></div></div>
+    
+
+    </div>		</div>
+                </div>
+    </div>
+    
+    </main><!--/.neve-main-->
+    
+    <link rel="stylesheet" id="font-awesome-css" href="https://www.realbible.tech/wp-content/plugins/js_composer/assets/lib/bower/font-awesome/css/font-awesome.min.css?ver=5.1.1" type="text/css" media="all">
+    
+                     
+
+	<div class="hfg_footer">
+		<div class="footer--row footer-top layout-full-contained" id="cb-row--footer-top" data-row-id="top" data-show-on="desktop">
+	<div class="footer--row-inner footer-top-inner footer-content-wrap">
+		<div class="container">
+			<div class="hfg-grid nv-footer-content hfg-grid-top row--wrapper row " data-section="hfg_footer_layout_top">
+				<div class="hfg-slot left"><div class="builder-item desktop-left tablet-left mobile-left"><div class="item--inner builder-item--footer-one-widgets" data-section="neve_sidebar-widgets-footer-one-widgets" data-item-id="footer-one-widgets">
+
+        </div>
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+<div class="footer--row footer-main layout-fullwidth" id="cb-row--footer-main" data-row-id="main"
+    data-show-on="desktop">
+    <div class="footer--row-inner footer-main-inner footer-content-wrap">
+        <div class="container">
+            <div class="hfg-grid nv-footer-content hfg-grid-main row--wrapper row "
+                data-section="hfg_footer_layout_main">
+                <div class="hfg-slot left">
+                    <div class="builder-item desktop-right tablet-left mobile-left">
+                        <div class="item--inner builder-item--footer-menu has_menu" data-section="footer_menu_primary"
+                            data-item-id="footer-menu">
+                            <div class="component-wrap">
+                                <div role="navigation" class="style-plain nav-menu-footer" aria-label="Footer Menu">
+
+                                    <ul id="footer-menu" class="footer-menu nav-ul">
+                                        <li id="menu-item-10282"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10282">
+                                            <a href="https://www.realbible.tech/about/">About the Project</a></li>
+                                        <li id="menu-item-10283"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10283">
+                                            <a href="https://www.realbible.tech/visualizations/">Visualizations</a></li>
+                                        <li id="menu-item-10284"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10284">
+                                            <a href="https://www.realbible.tech/analyses/">Language Analyses</a></li>
+                                        <li id="menu-item-10281"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10281">
+                                            <a href="https://www.realbible.tech/copyrights/">Copyrights</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="hfg-slot c-left">
+                    <div class="builder-item desktop-center tablet-left mobile-left">
+                        <div class="item--inner builder-item--footer-three-widgets"
+                            data-section="neve_sidebar-widgets-footer-three-widgets"
+                            data-item-id="footer-three-widgets">
+                            <div class="widget-area">
+                                <div id="patreon_sidebar_site_widget-2"
+                                    class="widget widget_patreon_sidebar_site_widget">
+                                    <div
+                                        style="text-align: center !important;font-size: 18px;margin-top: 10px;margin-bottom: 10px;">
+                                        Support the RBT Project on Patreon!</div>
+
+                                    <div class="cb_p6_patreon_site_widget" style="text-align:center !important;"><a
+                                            rel="nofollow"
+                                            href="https://www.patreon.com/realbible?utm_content=site_sidebar_widget&amp;utm_medium=patron_button_and_widgets_plugin&amp;utm_campaign=8613335&amp;utm_term=&amp;utm_source=https://www.realbible.tech/"><img
+                                                style="margin-top: 10px;margin-bottom: 10px;max-width:200px;width:100%;height:auto;"
+                                                src="https://www.realbible.tech/wp-content/plugins/patron-button-and-widgets-by-codebard/images/become_a_patron_button.png"></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer--row footer-bottom layout-full-contained" id="cb-row--footer-bottom" data-row-id="bottom"
+    data-show-on="desktop">
+    <div class="footer--row-inner footer-bottom-inner footer-content-wrap">
+        <div class="container">
+            <div class="hfg-grid nv-footer-content hfg-grid-bottom row--wrapper row "
+                data-section="hfg_footer_layout_bottom">
+                <div class="hfg-slot left">
+                    <div class="builder-item desktop-center tablet-left mobile-left">
+                        <div class="item--inner builder-item--footer_copyright" data-section="footer_copyright"
+                            data-item-id="footer_copyright">
+                            <div class="component-wrap">
+                                <div>
+                                    <p>(c) Copyright 2023 <a href="https://realbible.tech"
+                                            rel="nofollow">realbible.tech</a></p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+    
+</body>
+</html>

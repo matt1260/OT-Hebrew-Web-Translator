@@ -1,0 +1,18 @@
+<!-- find_replace.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Find and Replace</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="find_text">Find:</label>
+      <input type="text" name="find_text" id="find_text">
+      <label for="replace_text">Replace with:</label>
+      <input type="text" name="replace_text" id="replace_text">
+      <br>
+      <input type="submit" value="Find and Replace All">
+    </form>
+  </div>
+{% endblock %}

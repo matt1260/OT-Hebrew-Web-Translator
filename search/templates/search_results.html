@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results for "{{ query }}"{% endblock %}
+
+{% block content %}
+    <h1>Search Results for "{{ query }}"</h1>
+    
+    {% if results %}
+        <table>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+
+                        <td>
+                            Genesis {{ result.chapter }}:{{ result.verse }} <br />
+                            {{ result.html|safe }}
+                        
+                        </td>
+                        <td>{{ result.hebrew }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}

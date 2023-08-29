@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+<h1>Edit RBT</h1>
+
+<p>
+<form method="get" action="{% url 'search' %}">
+    <input type="text" name="q" placeholder="Enter search term...">
+    <button type="submit">Search</button>
+</form>
+</p>
+
+<p>
+    <strong>Select a Chapter:</strong>
+    {% for chapter in 50|get_range %} <!-- only works for Genesis -->
+    <a href="?book=Genesis&chapter={{ chapter }}">{{ chapter }}</a> |
+    {% endfor %}
+</p>
+
+
+
+
+{% endblock %}

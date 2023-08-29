@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ 
+  <p><a href="{% url 'search' %}">Back to Search</a></p>
+
+  <h1>Genesis {{ chapter_ref }}:{{ verse_ref }}</h1>
+  
+  <div style="text-align: right;">
+  <span style="font-size: 24px;">{{ hebrew|safe }}</span>
+  </div>
+
+  {{ verse_html|safe }}
+
+    <hr />
+
+    {{footnote_html|safe}}
+
+
+
+{% endblock %}
