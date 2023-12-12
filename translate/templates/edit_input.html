@@ -5,10 +5,83 @@
 <h1>Edit RBT</h1>
 
 <p>
-<form method="get" action="{% url 'search' %}">
-    <input type="text" name="q" placeholder="Enter search term...">
-    <button type="submit">Search</button>
-</form>
+    <form method="get" action="/RBT/edit_search/" style="text-align: left;">
+        <input type="text" name="q" placeholder="Enter a search word...">
+        
+        <select name="book">
+            <option value="all">Search all books</option>
+            <option value="OT">Search all Old Testament books</option>
+            <option value="NT">Search all New Testament books</option>
+            <option value="Gen">Genesis</option>
+            <option value="Exo">Exodus</option>
+            <option value="Lev">Leviticus</option>
+            <option value="Num">Numbers</option>
+            <option value="Deu">Deuteronomy</option>
+            <option value="Jos">Joshua</option>
+            <option value="Jdg">Judges</option>
+            <option value="Rut">Ruth</option>
+            <option value="1Sa">1 Samuel</option>
+            <option value="2Sa">2 Samuel</option>
+            <option value="1Ki">1 Kings</option>
+            <option value="2Ki">2 Kings</option>
+            <option value="1Ch">1 Chronicles</option>
+            <option value="2Ch">2 Chronicles</option>
+            <option value="Ezr">Ezra</option>
+            <option value="Neh">Nehemiah</option>
+            <option value="Est">Esther</option>
+            <option value="Job">Job</option>
+            <option value="Psa">Psalms</option>
+            <option value="Pro">Proverbs</option>
+            <option value="Ecc">Ecclesiastes</option>
+            <option value="Son">Song of Solomon</option>
+            <option value="Isa">Isaiah</option>
+            <option value="Jer">Jeremiah</option>
+            <option value="Lam">Lamentations</option>
+            <option value="Eze">Ezekiel</option>
+            <option value="Dan">Daniel</option>
+            <option value="Hos">Hosea</option>
+            <option value="Joe">Joel</option>
+            <option value="Amo">Amos</option>
+            <option value="Oba">Obadiah</option>
+            <option value="Jon">Jonah</option>
+            <option value="Mic">Micah</option>
+            <option value="Nah">Nahum</option>
+            <option value="Hab">Habakkuk</option>
+            <option value="Zep">Zephaniah</option>
+            <option value="Hag">Haggai</option>
+            <option value="Zec">Zechariah</option>
+            <option value="Mal">Malachi</option>
+            <option value="">Search by book</option>
+            <option value="Mat">Matthew</option>
+            <option value="Mar">Mark</option>
+            <option value="Luk">Luke</option>
+            <option value="Joh">John</option>
+            <option value="Act">Acts</option>
+            <option value="Rom">Romans</option>
+            <option value="1Co">1 Corinthians</option>
+            <option value="2Co">2 Corinthians</option>
+            <option value="Gal">Galatians</option>
+            <option value="Eph">Ephesians</option>
+            <option value="Php">Philippians</option>
+            <option value="Col">Colossians</option>
+            <option value="1Th">1 Thessalonians</option>
+            <option value="2Th">2 Thessalonians</option>
+            <option value="1Ti">1 Timothy</option>
+            <option value="2Ti">2 Timothy</option>
+            <option value="Tit">Titus</option>
+            <option value="Phm">Philemon</option>
+            <option value="Heb">Hebrews</option>
+            <option value="Jas">James</option>
+            <option value="1Pe">1 Peter</option>
+            <option value="2Pe">2 Peter</option>
+            <option value="1Jo">1 John</option>
+            <option value="2Jo">2 John</option>
+            <option value="3Jo">3 John</option>
+            <option value="Jud">Jude</option>
+            <option value="Rev">Revelation</option>
+        </select>
+        
+        <button type="submit">Search</button>
 </p>
 
 <p>

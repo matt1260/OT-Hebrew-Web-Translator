@@ -14,6 +14,8 @@ urlpatterns = [
     path('undo_replacements/', views.undo_replacements_view, name='undo_replacements'),
     path('search_footnotes/', views.search_footnotes, name='search_footnotes'),
     path('edit_footnote/', views.edit_footnote, name='edit_footnote'),
+    path('RBT/edit_footnote/', views.edit_footnote, name='edit_footnote'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('RBT/edit_search/', views.edit_search, name='edit_search'),
 
 ]

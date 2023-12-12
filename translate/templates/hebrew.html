@@ -1,65 +1,454 @@
 {% extends 'base.html' %}
+{% block title %}RBT Translator - {{ page_title }}{% endblock %}
 {% load custom_tags %}
 {% block content %}
-<p><a href="/RBT/translate/">Back to Translate Search</a></p>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      // Get all elements with class "morph-cell"
+      var morphCells = document.querySelectorAll(".morph-cell");
+
+      // Add event listeners to show and hide the pop-up
+      morphCells.forEach(function (cell) {
+          cell.addEventListener("mouseover", function () {
+              var morphPopup = this.querySelector(".morph-popup");
+              morphPopup.style.display = "block";
+          });
+
+          cell.addEventListener("mouseout", function () {
+              var morphPopup = this.querySelector(".morph-popup");
+              morphPopup.style.display = "none";
+          });
+      });
+  });
+</script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+/>
+  
+
+<style>
+
+
+/* Style for the slider (the visual part of the toggle) */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+/* Style for the slider when the checkbox is checked */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+/* Style for the checkbox when it's checked */
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+/* Style for the slider when it's checked */
+input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+  .container.single-page-container {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 80%;
+  }
+</style>
+<style>
+  .morph-popup {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 5px;
+      z-index: 1;
+  }
+
+  .morph-cell:hover .morph-popup {
+      display: block;
+  }
+
+  /* Style for the STRONGS pop-up container */
+  .popup-container {
+      position: relative; /* Create a positioning context */
+      display: inline-block; /* Display the container inline */
+  }
+
+  /* Style for the pop-up content */
+  .popup-content {
+      display: none; /* Initially hide the content */
+      position: absolute; /* Position it absolutely within the container */
+      top: 100%; /* Position below the container */
+      background-color: #fff; /* Background color */
+      border: 1px solid #ccc; /* Border */
+      padding: 10px; /* Padding */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a shadow */
+      z-index: 1; /* Ensure it's above other content */
+      width: 400px; /* Adjust the width as needed */
+      font-size: 12px;
+      text-align: left;
+      left: -185px; /* Shift the content 50px to the left */
+  }
+
+  /* Style to show the pop-up content on hover */
+  .popup-container:hover .popup-content {
+      display: block; /* Show the content on hover */
+  }
+  .table-container {
+  /* Make sure the container contains the floated elements */
+  overflow: hidden;
+  }
+
+  .right-panel {
+  /* Float the new div to the right */
+  float: right;
+  /* You can add more styling here */
+  }
+
+  td.checkbox-cell {
+      text-align: center; /* Center horizontally */
+      vertical-align: middle; /* Center vertically */
+  }
+
+  #englishReader {
+        margin-bottom: 10px; /* Adjust the bottom margin as needed */
+        display: block;
+    }
+  #textArea {
+      margin-top: 10px;
+      width: 100%;
+  }
+  .right-panel button {
+        margin-top: 2px; 
+    }
+  .heb {
+        font-size: 20px; 
+    }
+  .arrow-links {
+    text-align: center;
+    padding: 10px; /* Adjust the padding as needed */
+  }
+
+  .arrow-links h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .arrow-links a {
+    text-decoration: none;
+    color: #007bff; /* Change the color to your preferred link color */
+    margin: 0 10px; /* Add space between the text and arrows */
+  }
+
+  .fas.fa-chevron-circle-left::before,
+  .fas.fa-chevron-circle-right::before {
+    font-size: 24px; /* Adjust the font size as needed */
+    margin: 0 5px; /* Add space between the icon and text */
+  }
+  button, input, select, textarea {
+  line-height: 1.4;
+  }
+  .replace_input {
+    padding: 0px !important;
+    padding-left: 4px !important;
+  }
+  .find_replace {
+    background-color: gray;
+    padding: 8px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+</style>
+
+<div class="search">
+<form method="get" action="/RBT/translate/" style="text-align: left;">
+  <input type="text" name="q" placeholder="Enter a reference...">
+  <button type="submit">Go</button>
+</form>
+{{ invalid_verse|safe }}
+</div>
 
 <div class="arrow-links">
     
     <h3>
-        <a href="{{ previous_verse }}"><i class="fas fa-chevron-circle-left"></i></a>
-        {{ verse }}<a href="{{ next_verse }}"><i class="fas fa-chevron-circle-right"></i></a>
+        <a href="{{ prev_ref }}"><i class="fas fa-chevron-circle-left"></i></a>
+        {{ verse }}<a href="{{ next_ref }}"><i class="fas fa-chevron-circle-right"></i></a>
     </h3>
     
 </div>
+{% if rbt %}
+<b>RBT Translation:</b> {{ rbt|safe }}
+{% endif %}
 
 {% if english_row %}
 
 <!--DISPLAY TABLE-->
 <table class="readerTable">
     <tbody>
+
+      {{ hebrew_row2|safe }}
+      {{ english_row2|safe }}
+      {{ strong_row2|safe }}
+      {{ morph_row2|safe }}
+
       {{ hebrew_row|safe }}
       {{ english_row|safe }}
+      {{ strong_row|safe }}
+      {{ morph_row|safe }}
+
     </tbody>
   </table>
   
-  <!--EDIT TABLE-->
-  <form method="post">
+  <!-- EDIT TABLE -->
+  <div class="table-container">
+    <form method="post">
     {% csrf_token %}
-    <table class="hebrewTable">
-        <thead>
-            <tr>
-                <th>Reference</th>
-                <th>English</th>
-                <th>Hebrew</th>
-                <th>Occurances</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% for id, ref_data, eng_data, heb_data, count_data in edit_table_data %}
-            <tr>
-              <td>{{ ref_data }}</td>
-              <td>
-                <input type="text" name="eng_data" value="{{ eng_data }}" class="edit-input">
-                <input type="hidden" name="id" value="{{ id }}">
-              </td>
-              <td style="font-size: 20px; text-align: right;">
-                {{ heb_data }}
-              </td>
-              <td>
-                {{ count_data }}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
+
+    <table class="hebrewTable" style="float: left;">
+ 
+      <tbody>
+        {% for id, ref_data, eng_data, unique, heb_data, color, search_count, search_count2, count1, count2, count3, count4, count5, count6, morph, combined_heb_niqqud, combined_heb, footnote_btn, footnote in edit_table_data %}
+        <tr>
+          <td>{{ ref_data }}</td>
+          <td>
+            <input type="text" name="eng_data" autocomplete="off" value="{{ eng_data }}" size="14" class="edit-input">
+            <input type="hidden" name="eng_id" value="{{ id }}">
+            <input type="hidden" name="original_eng" value="{{ eng_data }}">
+            <input type="hidden" name="combined_heb" value="{{ combined_heb }}">
+            <input type="hidden" name="combined_heb_niqqud" value="{{ combined_heb_niqqud }}">
+          </td>
+          <td style="font-size: 20px; text-align: right;">
+            {{ heb_data }}
+          </td>
+          <td>
+            {{ unique|safe }}
+          </td>
+          <td>
+            {{ footnote_btn|safe }}
+          </td>
+
+          {{ color|safe }}
+
+          <td>
+            <span class="heb">{{ combined_heb_niqqud }}</span>
+            {{ search_count|safe }}
+            
+          </td>
+          <td>
+            <span class="heb">{{ combined_heb }}</span>
+            {{ search_count2|safe }}
+          </td>
+          <td>
+            {{ count1|safe }}
+          </td>
+          <td>
+            {{ count2|safe }}
+          </td>
+          <td>
+            {{ count3|safe }}
+          </td>
+          <td>
+            {{ count4|safe }}
+          </td>
+          <td>
+            {{ count5|safe }}
+          </td>
+          <td>
+            {{ count6|safe }}
+          </td>
+          
+        </tr>
+        <tr>
+          {{ footnote|safe }}
+        </tr>
+
+        {% endfor %}
+        
+      </tbody>
     </table>
-    <button type="submit">Save Changes</button>
+
+
+  <div class="right-panel" style="float: right; width: 24%;">
+    <h4>Verse Editor</h4>
+    
+      <span id="englishReader">{{ english_reader|safe }}</span>
+
+      <textarea name="html" id="textArea" autocomplete="off" rows="6" oninput="updateEnglishReader(this.value)">{{ english_reader }}</textarea>
+      <input type="hidden" name="verse_id" value="{{ verse_id }}">
+      <input type="hidden" name="english_verse" value="{{ english_verse }}">
+      <br>
+      <button type="button" style="background-color: #808080; padding: 3px; width: 28px; height: 28px; vertical-align: middle;" onclick="applyFontStyle('italic'); updateEnglishReader(document.getElementById('textArea').value)"><i>I</i></button>
+      <button type="button" style="background-color: #808080; padding: 3px; width: 28px; height: 28px; vertical-align: middle;" onclick="applyHayahStyle('italic'); updateEnglishReader(document.getElementById('textArea').value)"><i>היה</i></button>
+      <button type="button" style="background-color: red; padding: 3px; width: 28px; height: 28px; vertical-align: middle;" onclick="applyFontColor('red'); updateEnglishReader(document.getElementById('textArea').value)"></button>
+      <button type="button" style="background-color: #FF1493; padding: 3px; width: 28px; height: 28px; vertical-align: middle;" onclick="applyFontColor('#FF1493'); updateEnglishReader(document.getElementById('textArea').value)"></button>
+      <button type="button" style="background-color: blue; padding: 3px; width: 28px; height: 28px; vertical-align: middle;" onclick="applyFontColor('blue'); updateEnglishReader(document.getElementById('textArea').value)"></button>
+      <button type="button" style="background-color: black; padding: 3px; width: 28px; height: 28px; vertical-align: middle; line-height: 0px;" onclick="resetText(); updateEnglishReader(document.getElementById('textArea').value)"><b>&#8630;</b></button>
+      <button type="button" style="background-color: green; padding: 3px; vertical-align: middle;" onclick="replaceWithEnglishVerse()">&#8634; load English</button>
+      <br>
+      <div class="find_replace">Find & Replace: <input type="text" name="find_text" autocomplete="off" value="" size="6" class="replace_input">
+      <input type="text" name="replace_text" autocomplete="off" value="" size="6" class="replace_input"></div>
+    </div>
+
+  <div style="clear: both;"></div>
+  <button type="submit">Save Changes</button>
+  <label for="use_niqqud">Use Niqqud</label>
+  <input type="checkbox" id="use_niqqud" name="use_niqqud" value="true"> <!--sends 'true' if checked -->
+  <label for="undo">Undo Last Find and Replace</label>
+  <input type="checkbox" id="undo" name="undo" value="true">  <!--sends 'true' if checked -->
   </form>
-  
+  </div>
+
+  <script>
+    function replaceWithEnglishVerse() {
+        var textArea = document.getElementById('textArea');
+        var englishVerse = document.querySelector('input[name="english_verse"]').value;
+        textArea.value = englishVerse;
+        updateEnglishReader(textArea.value);
+    }
+
+  </script>
+  <script>
+    var originalText = '{{ english_reader }}';
+
+    function applyFontColor(color) {
+        var textArea = document.getElementById('textArea');
+        var selectedText = textArea.value.substring(textArea.selectionStart, textArea.selectionEnd);
+        
+        if (selectedText) {
+            var coloredText = `<span style="color: ${color};">${selectedText}</span>`;
+            var newText = textArea.value.substring(0, textArea.selectionStart) + coloredText + textArea.value.substring(textArea.selectionEnd);
+            textArea.value = newText;
+        }
+    }
+
+    function applyFontStyle(style) {
+        var textArea = document.getElementById('textArea');
+        var selectedText = textArea.value.substring(textArea.selectionStart, textArea.selectionEnd);
+
+        if (selectedText) {
+            var styledText = `<span style="font-style: ${style};">${selectedText}</span>`;
+            var newText = textArea.value.substring(0, textArea.selectionStart) + styledText + textArea.value.substring(textArea.selectionEnd);
+            textArea.value = newText;
+        }
+    }   
+    
+    function applyHayahStyle(style) {
+        var textArea = document.getElementById('textArea');
+        var selectedText = textArea.value.substring(textArea.selectionStart, textArea.selectionEnd);
+
+        if (selectedText) {
+            var styledText = `<span class="hayah">${selectedText}</span>`;
+            var newText = textArea.value.substring(0, textArea.selectionStart) + styledText + textArea.value.substring(textArea.selectionEnd);
+            textArea.value = newText;
+        }
+    }
+
+    
+    function resetText() {
+      var textArea = document.getElementById('textArea');
+      textArea.value = originalText;
+      updateEnglishReader(originalText);
+    }
+
+    function updateEnglishReader(text) {
+      var englishReader = document.getElementById('englishReader');
+      englishReader.innerHTML = text;
+    }
+  </script>
+
+<script>
+function toggleFootnote(button) {
+    const target = button.getAttribute('data-target');
+    const footnote = document.querySelector(`.${target}`);
+
+    if (footnote.style.display === 'none') {
+        showFootnote(target);
+    } else {
+        hideFootnote(target);
+    }
+}
+
+function hideFootnote(target) {
+    document.querySelector(`.${target}`).style.display = 'none';
+}
+
+function showFootnote(target) {
+    document.querySelector(`.${target}`).style.display = 'table-cell';
+}
+
+function wrapTextWithItalics(textareaId) {
+    var textarea = document.getElementById(textareaId);
+    var text = textarea.value;
+    var selectionStart = textarea.selectionStart;
+    var selectionEnd = textarea.selectionEnd;
+
+    if (selectionStart !== selectionEnd) {
+        var beforeSelection = text.substring(0, selectionStart);
+        var selectedText = text.substring(selectionStart, selectionEnd);
+        var afterSelection = text.substring(selectionEnd);
+
+        var wrappedText = beforeSelection + '<i>' + selectedText + '</i>' + afterSelection;
+
+        textarea.value = wrappedText;
+    }
+}
+
+function wrapWithHeader(textareaId) {
+    var textarea = document.getElementById(textareaId);
+    var text = textarea.value;
+    var selectionStart = textarea.selectionStart;
+    var selectionEnd = textarea.selectionEnd;
+
+    if (selectionStart !== selectionEnd) {
+        var beforeSelection = text.substring(0, selectionStart);
+        var selectedText = text.substring(selectionStart, selectionEnd);
+        var afterSelection = text.substring(selectionEnd);
+
+        var wrappedText = beforeSelection + '<span class="footnote_header">' + selectedText + '</span>' + afterSelection;
+
+        textarea.value = wrappedText;
+    }
+}
+
+</script>
+  <p>
+    <h4>Chapter Reader</h4>
+    {{ chapter_reader|safe }}
+  </p>
+    {% if updates %}
+      {% for update in updates %}
+      <p style="margin-bottom: 0px; font-size: 10px; color: green;">{{ update }}</p>
+      {% endfor %}
+    {% endif %}
 
     {% else %}
         <h1>No Rows Found</h1>
         <p>No rows matching the reference '{{ rbt_heb_ref }}' with a wildcard '*' at the end.</p>
     {% endif %}
+
+
+
 
 {% endblock %}

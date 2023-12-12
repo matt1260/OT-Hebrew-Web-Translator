@@ -2,28 +2,81 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from search.models import Genesis, GenesisFootnotes, EngLXX, LITV
 from django.db.models import Q, Max, Min
+from django.http import JsonResponse
+import json
+
 import re
 # import pythonbible as bible
 import requests
 import sqlite3
+from translate.translator import *
+
+GPT_API_KEY = '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'
+
 
 def home(request):
     return HttpResponse("You're at the home page.")
 
-# /chapter/ (not used)
-# def chapter(request):
-#     chapter_num = request.GET.get('chapter')
-#     book = request.GET.get('book')
-#     if not chapter_num:
-#         return render(request, 'search_input.html')
+import requests
+from django.http import JsonResponse
 
-#     results = Genesis.objects.filter(chapter=chapter_num)
-#     text = ''.join([result.text for result in results])
+def paraphrase(request):
+    if request.method == 'POST':
+        try:
+            # Your input_text extraction code here
+            #input_text = request.POST.get('text', '')
+            input_text = request.POST.get('text', '').encode('utf-8').decode('utf-8')
 
-#     context = {'text': text, 'book': book, 'chapter_num': chapter_num}
-#     return render(request, 'chapter.html', context)
+            endpoint = "https://api.openai.com/v1/chat/completions"
+            prompt = "Edit the following text to paraphrase without removing the Hebrew:"
 
-# Retrieve and format each footnote into a table
+            # Specify the model
+            model = "gpt-3.5-turbo-0613"
+
+            # Create the conversation with the prompt
+            conversation = [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": f"{prompt} {input_text}"},
+            ]
+
+            # Make the API request
+            response = requests.post(
+                endpoint,
+                json={
+                    "messages": conversation,
+                    "model": model,
+                    "max_tokens": 70,
+                },
+                headers={
+                    "Authorization": f"Bearer {GPT_API_KEY}",
+                    "Content-Type": "application/json",
+                },
+            )
+
+            # Check if the request was successful
+            if response.status_code == 200:
+                # Get the rewritten text from the response
+                data = response.json()
+                re_paraphrase = data["choices"][0]["message"]["content"]
+                return JsonResponse({'paraphrasedText': re_paraphrase})
+            
+            elif response.status_code == 429:
+                # Handle rate limit exceeded error
+                return JsonResponse({'error': 'Rate limit exceeded. Please try again later.'}, status=429)
+            elif response.status_code == 503:
+                # Handle service unavailable error
+                return JsonResponse({'error': 'Service is currently unavailable. Please try again later.'}, status=503)
+            else:
+                return JsonResponse({'error': f'Request failed with status code {response.status_code}'}, status=500)
+
+        except Exception as e:
+            # Handle any exceptions and return an error response
+            return JsonResponse({'error': str(e)}, status=400)
+
+    # Handle other HTTP methods or return an error response
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+# Retrieve and format each footnote into a table row
 def get_footnote(footnote_id):
     results = GenesisFootnotes.objects.filter(
         footnote_id=footnote_id).values('footnote_html')
@@ -41,7 +94,6 @@ def get_footnote(footnote_id):
 
     return table_html
 
-
 def get_results(book, chapter_num, verse_num=None):
 
     # RBT DATABASE (uses django database. Temporary until rbt_hebrew.db is completed)
@@ -57,7 +109,9 @@ def get_results(book, chapter_num, verse_num=None):
     if verse_num is not None:
         rbt = rbt.filter(verse=verse_num)
         # corresponds the html column to the verse
+        rbt_text = rbt.values_list('text', flat=True).first()
         rbt_html = rbt.values_list('html', flat=True).first()
+        rbt_ai = rbt.values_list('rbt_reader', flat=True).first()
         rbt_heb = rbt.values_list('hebrew', flat=True).first()
         record_id_tuple = rbt.values_list('id').first()
         record_id = record_id_tuple[0] if record_id_tuple else None
@@ -120,9 +174,9 @@ def get_results(book, chapter_num, verse_num=None):
             esv_verse_text = esv_verse_text[index + 3:]
             # remove (ESV) from end of verse
             esv_verse_text = esv_verse_text[:-5]
-            esv = f'<p><strong>ESV Translation:</strong><br> {esv_verse_text}</p>'
+            esv = f'<div class="single_verse"><strong>ESV Translation:</strong><br> {esv_verse_text}</div>'
         else:
-            esv = '<p><strong>ESV Translation:</strong><br> Error retrieving verse.</p>'
+            esv = '<div class="single_verse"><strong>ESV Translation:</strong><br> Error retrieving verse.</div>'
 
         # BRENTON SEPTUAGINT in English Updated
         englxx_dict = {'Genesis': 'GEN', 'Exodus': 'EXO', 'Leviticus': 'LEV', 'Numbers': 'NUM', 'Deuteronomy': 'DEU', 'Joshua': 'JOS', 'Judges': 'JDG', 'Ruth': 'RUT', '1 Samuel': '1SA', '2 Samuel': '2SA', '1 Kings': '1KI', '2 Kings': '2KI', '1 Chronicles': '1CH', '2 Chronicles': '2CH', 'Ezra': 'EZR', 'Job': 'JOB', 'Psalms': 'PSA', 'Proverbs': 'PRO', 'Ecclesiastes': 'ECC', 'Song of Solomon': 'SNG', 'Isaiah': 'ISA', 'Jeremiah': 'JER', 'Lamentations': 'LAM', 'Ezekiel': 'EZK', 'Hosea': 'HOS', 'Joel': 'JOL',
@@ -133,21 +187,23 @@ def get_results(book, chapter_num, verse_num=None):
         eng_lxx = eng_lxx.filter(chapter=chapter_num) # run chapter filter
         eng_lxx = eng_lxx.filter(startVerse=verse_num)  # run verse filter
         eng_lxx = eng_lxx.values_list('verseText', flat=True).first()
-        eng_lxx = f'<p><strong>Brenton Septuagint Translation:</strong><br> {eng_lxx}</p>'
+        eng_lxx = f'<div class="single_verse"><strong>Brenton Septuagint Translation:</strong><br> {eng_lxx}</div>'
 
         # LITV Translation
         litv = LITV.objects.filter(book=book)
         litv = litv.filter(chapter=chapter_num)
         litv = litv.filter(verse=verse_num)
         litv = litv.values_list('text', flat=True).first()
-        litv = f'<p><strong>LITV Translation:</strong><br> {litv}</p>'
+        litv = f'<div class="single_verse"><strong>LITV Translation:</strong><br> {litv}</div>'
 
         #return rbt, esv, litv, eng_lxx, 
         return {
             'esv': esv,
             'litv': litv,
             'eng_lxx': eng_lxx,
+            'rbt_text': rbt_text,
             'rbt': rbt_html,
+            'rbt_ai': rbt_ai,
             'hebrew': rbt_heb,
             'footnote_content': footnote_contents,
             'next_ref': next_ref,
@@ -158,31 +214,25 @@ def get_results(book, chapter_num, verse_num=None):
     else:
         return rbt
 
-  
 # /RBT/ root home
 
-
 def search(request):
-    query = request.GET.get('q')  # search form used
+    query = request.GET.get('q')  # keyword search form used
     chapter_num = request.GET.get('chapter')
     book = request.GET.get('book')
     verse_num = request.GET.get('verse')
     footnote_id = request.GET.get('footnote')
 
-    if query:  # search query currently only searches the Genesis table
-
+    #  KEYWORD SEARCH
+    if query:
+        print('Query:', query)
         results = Genesis.objects.filter(html__icontains=query)
-
         # Strip only paragraph tags from results
         for result in results:
-            result.html = result.html.replace('<p>', '').replace(
-                '</p>', '')  # strip the paragraph tags
+            result.html = result.html.replace('<p>', '').replace('</p>', '')  # strip the paragraph tags
+
             
-            # Replace all hashtag links with query parameters
-            result.html = re.sub(
-                r'#(sdfootnote(\d+)sym)', rf'?footnote={result.chapter}-{result.verse}-\g<2>', result.html)
-            
-            # apply bold to search query
+            # Apply bold to search query
             result.html = re.sub(
                 f'({re.escape(query)})',
                 r'<strong>\1</strong>',
@@ -190,8 +240,181 @@ def search(request):
                 flags=re.IGNORECASE
             )
 
-        context = {'results': results, 'query': query}
-        return render(request, 'search_results.html', context)
+        # Count the number of results
+        rbt_result_count = len(results)
+
+       # Search the hebrew or greek databases
+        nt_books = [
+            'Mat', 'Mar', 'Luk', 'Joh', 'Act', 'Rom', '1Co', '2Co', 'Gal', 'Eph',
+            'Phi', 'Col', '1Th', '2Th', '1Ti', '2Ti', 'Tit', 'Phm', 'Heb', 'Jam',
+            '1Pe', '2Pe', '1Jo', '2Jo', '3Jo', 'Jud', 'Rev'
+        ]
+        ot_books = [
+                'Gen', 'Exo', 'Lev', 'Num', 'Deu', 'Jos', 'Jdg', 'Rut', '1Sa', '2Sa',
+                '1Ki', '2Ki', '1Ch', '2Ch', 'Ezr', 'Neh', 'Est', 'Job', 'Psa', 'Pro',
+                'Ecc', 'Sng', 'Isa', 'Jer', 'Lam', 'Eze', 'Dan', 'Hos', 'Joe', 'Amo',
+                'Oba', 'Jon', 'Mic', 'Nah', 'Hab', 'Zep', 'Hag', 'Zec', 'Mal'
+            ]
+        
+
+        if book == 'all':
+            ot_table_query = ' OR '.join([f"Ref LIKE '%{bookref}%'" for bookref in ot_books])
+            nt_table_query = ' OR '.join([f"verse LIKE '%{bookref}%'" for bookref in nt_books])
+
+            conn_ot = sqlite3.connect('rbt_hebrew.sqlite3')
+            cursor_ot = conn_ot.cursor()
+            cursor_ot.execute(f"""
+                SELECT * FROM hebrewdata
+                WHERE {ot_table_query};
+            """)
+            ot_rows = cursor_ot.fetchall()
+            ot_column_names = [desc[0] for desc in cursor_ot.description]
+
+            conn_nt = sqlite3.connect('rbt_greek.sqlite3')
+            cursor_nt = conn_nt.cursor()
+            cursor_nt.execute(f"""
+                SELECT * FROM strongs_greek
+                WHERE {nt_table_query};
+            """)
+            nt_rows = cursor_nt.fetchall()
+            nt_column_names = [desc[0] for desc in cursor_nt.description]
+            
+    
+        elif book == 'NT':
+            tablequery = ' OR '.join([f"verse LIKE '%{bookref}%'" for bookref in nt_books])
+            conn = sqlite3.connect('rbt_greek.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                SELECT * FROM strongs_greek
+                WHERE {tablequery};
+            """)
+            book_rows = cursor.fetchall()
+            column_names = [desc[0] for desc in cursor.description]
+
+        elif book == 'OT':
+            tablequery = ' OR '.join([f"Ref LIKE '%{bookref}%'" for bookref in ot_books])
+            conn = sqlite3.connect('rbt_hebrew.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                SELECT * FROM hebrewdata
+                WHERE {tablequery};
+            """)
+            book_rows = cursor.fetchall()
+            column_names = [desc[0] for desc in cursor.description]
+
+        elif book in ot_books:
+            conn = sqlite3.connect('rbt_hebrew.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM hebrewdata
+                WHERE Ref LIKE ?;
+            """, ('%' + book + '%',)) # 'book' is already abbreviated
+            book_rows = cursor.fetchall()
+            column_names = [desc[0] for desc in cursor.description]
+        
+        else:
+            conn = sqlite3.connect('rbt_greek.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM strongs_greek
+                WHERE verse LIKE ?;
+            """, ('%' + book + '%',)) # 'book' is already abbreviated
+
+            book_rows = cursor.fetchall()
+            column_names = [desc[0] for desc in cursor.description]
+
+        query_count = 0
+        links = []
+
+        if book == 'NT' or book in nt_books:
+            index = column_names.index('english')
+            for row in book_rows:
+            # Check if index is not None and 'query' exists in the column (case-insensitive)
+                if row[index] and query.lower() in row[index].lower():
+                    query_count += 1
+                    verse = row[1]
+                    bookref = verse[:3]
+                    bookref = convert_book_name(bookref)
+                    bookref = bookref.lower()
+                    bookref = bookref.replace(' ', '_')
+                    verse1 = verse[:-3]
+                    verse = verse1[4:]
+                    verse = verse.replace('.', '-')
+                    
+                    link = f'<a href="https://biblehub.com/{bookref}/{verse}.htm">{verse1}</a>'
+                    links.append(link)
+
+            conn.close()
+
+        elif book == 'OT' or book in ot_books:
+            index = column_names.index('Strongs')
+            for row in book_rows:
+            # Check if index is not None and 'query' exists in the column (case-insensitive)
+                if row[index] and query.lower() in row[index].lower():
+                    query_count += 1
+                    verse = row[1]
+                    bookref = verse[:3]
+                    bookref = convert_book_name(bookref)
+                    bookref = bookref.lower()
+                    bookref = bookref.replace(' ', '_')
+                    verse1 = verse[:-3]
+                    verse = verse1[4:]
+                    verse = verse.replace('.', '-')
+                    link = f'<a href="https://biblehub.com/{bookref}/{verse}.htm">{verse1}</a>'
+                    links.append(link)
+
+        elif ot_rows is not None:
+            index_ot = ot_column_names.index('Strongs')
+            index_nt = nt_column_names.index('english')
+
+            for row in ot_rows:
+                # Check if index is not None and 'query' exists in the column (case-insensitive)
+                if row[index_ot] and query.lower() in row[index_ot].lower():
+                    query_count += 1
+                    verse = row[1]
+                    bookref = verse[:3]
+                    bookref = convert_book_name(bookref)
+                    bookref = bookref.lower()
+                    bookref = bookref.replace(' ', '_')
+                    verse1 = verse[:-3]
+                    verse = verse1[4:]
+                    verse = verse.replace('.', '-')
+                    link = f'<a href="https://biblehub.com/{bookref}/{verse}.htm">{verse1}</a>'
+                    links.append(link)
+
+            for row in nt_rows:
+                # Check if index is not None and 'query' exists in the column (case-insensitive)
+                if row[index_nt] and query.lower() in row[index_nt].lower():
+                    query_count += 1
+                    verse = row[1]
+                    bookref = verse[:3]
+                    bookref = convert_book_name(bookref)
+                    bookref = bookref.lower()
+                    bookref = bookref.replace(' ', '_')
+                    verse1 = verse[:-3]
+                    verse = verse1[4:]
+                    verse = verse.replace('.', '-')
+                    link = f'<a href="https://biblehub.com/{bookref}/{verse}.htm">{verse1}</a>'
+                    links.append(link)
+
+
+        # if individual book is searched convert the full to the abbrev
+        if book not in ['NT', 'OT', 'all']:
+            book2 = convert_book_name(book)
+            book = book2.lower()  
+        else:
+            book2 = book
+
+        page_title = f'Search results for "{query}"'
+        context = {'results': results, 
+                   'query': query, 
+                   'rbt_result_count': rbt_result_count, 
+                   'links': links, 
+                   'query_count': query_count,
+                   'book2': book2, 
+                   'book': book }
+        return render(request, 'search_results.html', {'page_title': page_title, **context})
+
 
     # SINGLE VERSE
     elif book and chapter_num and verse_num:
@@ -200,6 +423,8 @@ def search(request):
 
         hebrew = results['hebrew']
         rbt = results['rbt']
+        rbt_text = results['rbt_text']
+        rbt_ai = results['rbt_ai']
         esv = results['esv']
         litv = results['litv']
         eng_lxx = results['eng_lxx']
@@ -210,12 +435,28 @@ def search(request):
         footnotes_content = "<p> ".join(footnote_contents)
         footnotes_content = f'<div style="font-size: 12px;">{footnotes_content}</div>'
 
-        rbt = f'<strong>RBT Translation:</strong><br> {rbt}</p>'
+        rbt_paraphrase = rbt_ai
 
-        context = {'previous_verse': previous_verse, 'next_verse': next_verse, 'footnotes': footnotes_content, 'book': book,
-                   'chapter_num': chapter_num, 'verse_num': verse_num, 'esv': esv, 'rbt': rbt, 'englxx': eng_lxx, 'litv': litv, 'hebrew': hebrew}
+        #rbt = highlight_rbt_lex(rbt)
 
-        return render(request, 'verse.html', context)
+        rbt = f'<strong>RBT Translation:</strong><div>{rbt}</div>'
+
+        context = {'previous_verse': previous_verse, 
+                   'next_verse': next_verse, 
+                   'footnotes': footnotes_content, 
+                   'book': book,
+                   'chapter_num': chapter_num, 
+                   'verse_num': verse_num, 
+                   'esv': esv, 
+                   'rbt': rbt,
+                   'rbt_text': rbt_text,
+                   'rbt_paraphrase': rbt_paraphrase, 
+                   'englxx': eng_lxx, 
+                   'litv': litv, 
+                   'hebrew': hebrew
+                   }
+        page_title = f'{book} {chapter_num}:{verse_num}'
+        return render(request, 'verse.html', {'page_title': page_title, **context})
 
     # SINGLE CHAPTER
     elif book and chapter_num:
@@ -224,10 +465,6 @@ def search(request):
 
         html = ""
         for result in results:
-
-            # Replace all hashtag footnote links with query parameters
-            # result.html = re.sub(
-            #     r'#(sdfootnote(\d+)sym)', rf'?footnote={result.chapter}-{result.verse}-\g<2>', result.html)
 
             if '</p><p>' in result.html:
                 # Split html into two parts using '</p><p>' as separator
@@ -239,9 +476,10 @@ def search(request):
                 html += f'<p><span class="verse_ref"><b><a href="?book={book}&chapter={result.chapter}&verse={result.verse}">{result.verse}</a> </b></span>{result.html[3:]}'  # Remove the first '<p>'
             else:
                 html += f'<span class="verse_ref"><b><a href="?book={book}&chapter={result.chapter}&verse={result.verse}">{result.verse}</a> </b></span>{result.html}'
-            
+        
+        page_title = f'{book} {chapter_num}'
         context = {'html': html, 'book': book, 'chapter_num': chapter_num}
-        return render(request, 'chapter.html', context)
+        return render(request, 'chapter.html', {'page_title': page_title, **context})
 
     # SINGLE FOOTNOTE
     elif footnote_id:
@@ -264,9 +502,70 @@ def search(request):
                             rf'?footnote={chapter_ref}-{verse_ref}-\g<2>', verse_html)
         verse_results[0]['html'] = verse_html
 
-        context = {'hebrew': hebrew, 'verse_html': verse_html, 'footnote_html': footnote_html,
-                   'footnote': footnote_id, 'chapter_ref': chapter_ref, 'verse_ref': verse_ref, }
+        context = {'hebrew': hebrew, 
+                   'verse_html': verse_html, 
+                   'footnote_html': footnote_html,
+                   'footnote': footnote_id, 
+                   'chapter_ref': chapter_ref, 
+                   'verse_ref': verse_ref, 
+                   }
         return render(request, 'footnote.html', context)
 
     else:
         return render(request, 'search_input.html')
+
+def word_view(request):
+    rbt_heb_ref = request.GET.get('word')
+    use_niqqud = request.GET.get('niqqud')
+
+    if use_niqqud == 'no':
+        field = 'combined_heb'
+    else:
+        field = 'combined_heb_niqqud'
+
+    connection = sqlite3.connect('rbt_hebrew.sqlite3')
+    cursor = connection.cursor()
+    query = f"""
+        SELECT id, Ref, {field}
+        FROM hebrewdata WHERE ref = ?;
+    """
+    cursor.execute(query, (f'{rbt_heb_ref}',))
+    rows_data = cursor.fetchall()
+    
+    id, ref, heb = rows_data[0]
+    parameters = (heb,) 
+    query = f"""
+        SELECT ref, COUNT(*) as count
+        FROM hebrewdata
+        WHERE {field} = ?
+        GROUP BY ref;
+    """
+    cursor.execute(query, parameters)
+    search_results = cursor.fetchall()
+
+    html = '<ol>'
+    count = 0
+    for result in search_results:
+        reference = result[0]  # 'ref' column
+        reference = reference.split('-')
+        reference = reference[0]
+        verse = reference.split('.')
+        
+        bookref = verse[0]
+        bookref = convert_book_name(bookref)
+        bookref = bookref.lower()
+        bookref = bookref.replace(' ', '_')
+
+        chapter = verse[1]
+        verse = verse[2]
+        
+        link = f'<a href="https://biblehub.com/{bookref}/{chapter}-{verse}.htm">{reference}</a>'
+    
+        html += f'<li style="margin-top: 0px; font-size: 12px;">{link}</li>'
+        count += 1
+
+    html = f'{html}</ol>'
+    count = str(count)
+    context = {'occurrences': html, 'count': count, 'heb_word': heb }
+    
+    return render(request, 'word.html', context)

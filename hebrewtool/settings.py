@@ -11,10 +11,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import logging
+from logging.handlers import TimedRotatingFileHandler
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEFAULT_CHARSET = 'utf-8'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -25,7 +29,7 @@ SECRET_KEY = 'django-insecure-vhlu8=mv-1%jbfh#0r1f!py+i_p*7*84@88_i)qx5f-vv9xfyx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 LOGIN_URL = 'accounts/login/'
 
@@ -125,9 +129,54 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'server225.web-hosting.com'
+EMAIL_PORT = 587  # The default SMTP port is 587 for TLS or 465 for SSL
+EMAIL_USE_TLS = True  # Use TLS (True or False)
+EMAIL_USE_SSL = False  # Use SSL (True or False)
+EMAIL_HOST_USER = 'mp@realbible.tech'
+EMAIL_HOST_PASSWORD = 'Malachi46'
+DEFAULT_FROM_EMAIL = 'webmaster@realbible.tech'  # The email address from which errors will be sent
+ADMINS = [('Matt', 'mattp1260@gmail.com')]  # List of email addresses to receive error reports
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': 'RBT_error.log',
+            'when': 'D',  # Rotate daily
+            'interval': 1,  # Keep one backup
+            'backupCount': 7,  # Keep up to 7 days of logs
+            'formatter': 'standard',  # Use the 'standard' formatter
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['mail_admins', 'file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

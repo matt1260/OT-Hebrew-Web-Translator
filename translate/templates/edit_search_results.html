@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Search Results for "{{ query }}"{% endblock %}
+
+{% block content %}
+    <h1>Search Results for "{{ query }}" in {{ book2 }}</h1>
+    <a href="/RBT/edit/">Back to Edit Search</a>
+    {% if results or links %}
+    <table>
+        <tbody>
+            <tr>
+                <td width="80%" style="vertical-align: top;">
+                    {{ rbt_result_count }} RBT results
+
+                    <table>
+                        <tbody>
+                            {% for result in results %}
+                            <tr>
+    
+                                <td>
+                                    <a href="../edit/?book=Genesis&chapter={{ result.chapter }}&verse={{ result.verse }}">Genesis {{ result.chapter }}:{{ result.verse }}</a><br />
+                                    {{ result.html|safe }}
+    
+                                </td>
+    
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+    
+                </td>
+                <td style="vertical-align: top; line-height: 1.0;">
+                    <div style="line-height: 1.4;"><h4 style="margin-bottom: 2px;">Strongs Concordance</h4>
+                    <font style="font-size: 13px;">{{ query_count }} results for "{{ query }}":</font> </div>
+                    <font style="font-size: 10px;">
+                        {% for link in links %}
+                        {{ link|safe }} <br>
+                        {% endfor %}
+                    </font>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}

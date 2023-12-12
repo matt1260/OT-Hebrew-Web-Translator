@@ -3,6 +3,26 @@
 {% block content %}
 <p><a href="/RBT/translate/edit">Back to Edit Search</a></p>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    /* Style for the green notice bar */
+    .notice-bar {
+        background-color: #7BD77F;
+        color: white;
+        font-size: 14px;
+        text-align: left;
+        padding: 4px; 
+        border-radius: 5px; 
+        font-family: sans-serif;
+
+    }
+
+    /* Style for the checkmark icon */
+    .icon {
+        margin-right: 10px; /* Add space between the icon and text */
+        margin-left: 5px;
+    }
+</style>
 <strong>Select a Chapter:</strong>
 {% for chapter in 50|get_range %}
     <a href="?book={{ book }}&chapter={{ chapter }}">{{ chapter }}</a> |
@@ -19,7 +39,7 @@
 </div>
 
 <h4>Verse</h4>
-
+{{ edit_result|safe }}
 <div style="display: flex; justify-content: flex-end;">
     <label for="niqqudSwitch" style="font-size: 12px;">Show Niqqud &nbsp</label>
     <input type="checkbox" id="niqqudSwitch" onclick="toggleNiqqud()">
@@ -58,9 +78,9 @@
 </script>
 
 <strong>RBT Translation:</strong><br>
- <div>{{ rbt|safe }}</div>   
+ <div class="single_verse">{{ rbt|safe }}</div>   
    
-<form method="post" action="{% url 'edit' %}" id="edit-form">            
+<form method="post" action="/RBT/edit/" id="edit-form">            
     {% csrf_token %}
     <textarea id="editor-texto" name="edited_content" rows="4" cols="80">
         {{ rbt|safe }}

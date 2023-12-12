@@ -23,9 +23,17 @@ urlpatterns = [
     path('', include('search.urls')),
     path('RBT/', include('search.urls')),
     path('translate/', include('translate.urls')),
+    path('RBT/translate/', include('translate.urls')),
+    path('RBT/paraphrase/', include('search.urls')),
     path('edit/', views.edit, name='edit'),
     path('RBT/edit/', views.edit, name='edit'),
+    path('edit_footnote/', views.edit_footnote, name='edit_footnote'),
+    path('RBT/edit_footnote/', views.edit_footnote, name='edit_footnote'),
+    path('RBT/edit_search/', views.edit_search, name='edit_search'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('RBT/translate/', include('translate.urls')),
+    path('RBT/edit/accounts/', include('django.contrib.auth.urls')),
+    path('edit/accounts/', include('django.contrib.auth.urls')),
+    path('RBT/translate/accounts/', include('django.contrib.auth.urls')),
+
 ]

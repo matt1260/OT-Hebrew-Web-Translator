@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <p>
+    <h4> {{ count }} Occurances of <font style="font-family: 'Times New Roman', Times, serif; font-size: 27px;">{{ heb_word }}</font></h4>
+
+      {{ occurrences|safe }}
+
+    </p>
+  </div>
+{% endblock %}

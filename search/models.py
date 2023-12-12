@@ -9,6 +9,7 @@ class Genesis(models.Model):
     html = models.TextField()
     text = models.TextField()
     hebrew = models.TextField()
+    rbt_reader = models.TextField()
     
     class Meta:
         db_table = 'genesis'
