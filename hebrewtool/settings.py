@@ -15,6 +15,8 @@ import os
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
+from django_secret_key import key
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +26,7 @@ DEFAULT_CHARSET = 'utf-8'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vhlu8=mv-1%jbfh#0r1f!py+i_p*7*84@88_i)qx5f-vv9xfyx'
+SECRET_KEY = key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
