@@ -139,16 +139,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'server225.web-hosting.com'
-EMAIL_PORT = 587  # The default SMTP port is 587 for TLS or 465 for SSL
-EMAIL_USE_TLS = True  # Use TLS (True or False)
-EMAIL_USE_SSL = False  # Use SSL (True or False)
-EMAIL_HOST_USER = 'mp@realbible.tech'
-EMAIL_HOST_PASSWORD = 'Malachi46'
-DEFAULT_FROM_EMAIL = 'webmaster@realbible.tech'  # The email address from which errors will be sent
-ADMINS = [('Matt', 'mattp1260@gmail.com')]  # List of email addresses to receive error reports
-
 
 LOGGING = {
     'version': 1,
@@ -176,7 +166,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['mail_admins', 'file'],
+            'handlers': ['file'],
             'level': 'ERROR',
             'propagate': True,
         },
