@@ -11,7 +11,9 @@ import requests
 import sqlite3
 from translate.translator import *
 
-GPT_API_KEY = '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'
+from api_keys import gpt_key, esv_key
+
+GPT_API_KEY = gpt_key
 
 
 def home(request):
@@ -161,7 +163,7 @@ def get_results(book, chapter_num, verse_num=None):
         }
 
         # ESV API
-        ESV_API_KEY = '30d1be39f66d44ce5be5a511dc31c949099cd21e'
+        ESV_API_KEY = esv_key
         ESV_API_URL = 'https://api.esv.org/v3/passage/text/'
         esv_headers = {'Authorization': f'Token {ESV_API_KEY}'}
         esv_response = requests.get(
